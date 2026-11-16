@@ -42,6 +42,7 @@
   .done dl { display: grid; grid-template-columns: auto 1fr; gap: 10px 28px; margin: 30px 0; font-size: .95rem; }
   .done dt { color: var(--graphite); font-weight: 300; }
   .done dd { margin: 0; }
+  .req-text { width: 100%; margin-top: 10px; font: inherit; font-size: .95rem; line-height: 1.6; color: var(--ink); background: var(--mist); border: 0; box-shadow: inset 0 0 0 1px var(--hair); padding: 16px; resize: vertical; }
   .visit { margin-top: 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
   .visit p { margin: 8px 0 0; color: var(--graphite); font-weight: 300; }
   @media (max-width: 960px) { .ap-l { grid-column: 1 / span 8; margin-bottom: 70px; } .ap-r { grid-column: 1 / -1; } }
@@ -78,7 +79,7 @@
         <div class="f"><label class="label" for="piece">Piece of interest</label><select id="piece" name="piece"><option value="">Not decided yet</option></select></div>
         <div class="f"><label class="label" for="note">Anything we should know</label><textarea id="note" name="note" placeholder="Your budget, the stone you have in mind, or a ring size."></textarea></div>
         <p class="err" id="err" role="alert"></p>
-        <div class="submit"><button class="btn" type="submit">Request appointment</button></div>
+        <div class="submit"><button class="btn" type="submit">Send request via Messenger</button><span class="label">Your request is copied and Messenger opens. Paste it into the chat and press send.</span></div>
       </form>
       <div class="visit">
         <div><p class="label gold">Visits</p><p>By appointment only</p></div>
@@ -93,6 +94,8 @@
 <script src="js/site.js"></script>
 <script>
 (function () {
+  /* VRIAH's Messenger link: requests are sent here. Set to the page's m.me address. */
+  const MESSENGER = 'https://m.me/61574694860431';
   const V = window.VRIAH;
   const sel = document.getElementById('piece');
   sel.insertAdjacentHTML('beforeend', V.pieces.map(p => `<option value="${p.id}">${p.name}, ${p.line.toLowerCase()}</option>`).join(''));
@@ -120,14 +123,33 @@
     if (!date) { err.textContent = 'Choose a preferred date. We will confirm or suggest another.'; f.date.focus(); return; }
     err.textContent = '';
     const p = V.get(sel.value);
-    const nice = new Date(date + 'T12:00').toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
+    const nice = new Date(date + 'T12:00').toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+    const pieceLine = p ? p.name + ' (' + p.line + ')' + (choice && choice.id === p.id ? ` · ${choice.stone}, ${choice.ct}, ${choice.gold}, size ${choice.size} · ${choice.price}` : '') : 'Not decided yet';
+    const note = f.note.value.trim();
+    const text = ['VRIAH appointment request', '',
+      'Name: ' + name, 'Email: ' + email, 'Appointment: ' + f.kind.value, 'Preferred date: ' + nice, 'Time: ' + f.time.value,
+      'Piece: ' + pieceLine].concat(note ? ['Note: ' + note] : []).join('\n');
+    // Messenger links cannot carry a pre-written message, so the request is copied for the visitor to paste.
+    const copy = () => (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject()).then(() => true, () => false);
+    const copied = copy();
+    if (MESSENGER) { const w = window.open(MESSENGER, '_blank', 'noopener'); }
+    const esc = t => t.replace(/[<>&]/g, c => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;' }[c]));
     f.outerHTML = `<div class="done" tabindex="-1" id="done">
-      <p class="label gold">Request ready</p>
-      <h2 class="display">Thank you, <em>${name.replace(/[<>&]/g, '')}.</em></h2>
-      <p class="prose">Here is the appointment you asked for. In this preview the request is not sent anywhere yet; on the live site it would go to the atelier.</p>
-      <dl><dt>Appointment</dt><dd>${f.kind.value}</dd><dt>Date</dt><dd>${nice}</dd><dt>Time</dt><dd>${f.time.value}</dd>
-      <dt>Piece</dt><dd>${p ? p.name + (choice && choice.id === p.id ? ` · ${choice.stone}, ${choice.ct}, ${choice.gold} · ${choice.price}` : '') : 'Not decided yet'}</dd></dl>
-      <a class="link" href="collection.html">Keep browsing the collection <span class="arr"></span></a></div>`;
+      <p class="label gold">One more step</p>
+      <h2 class="display">Thank you, <em>${esc(name)}.</em></h2>
+      <p class="prose" id="copy-status">Your request is ready. Paste it into our Messenger chat and press send; we reply there to confirm.</p>
+      <label class="label" for="req-text" style="display:block;margin-top:26px">Your request</label>
+      <textarea id="req-text" class="req-text" readonly rows="9">${esc(text)}</textarea>
+      <div class="submit">
+        ${MESSENGER ? `<a class="btn" href="${MESSENGER}" target="_blank" rel="noopener">Open Messenger</a>` : ''}
+        <button class="btn ghost" type="button" id="copy-again">Copy request</button>
+      </div>
+      <p class="label" style="margin-top:30px"><a class="link" href="collection.html">Keep browsing the collection <span class="arr"></span></a></p></div>`;
+    const status = document.getElementById('copy-status'), box = document.getElementById('req-text');
+    copied.then(ok => { status.textContent = ok ? 'Your request is copied. Paste it into our Messenger chat and press send; we reply there to confirm.' : 'Select the request below, copy it, then paste it into our Messenger chat and press send.'; });
+    document.getElementById('copy-again').addEventListener('click', () => {
+      copy().then(ok => { status.textContent = ok ? 'Copied again. Paste it into our Messenger chat and press send.' : 'Select the request below and copy it.'; if (!ok) { box.focus(); box.select(); } });
+    });
     document.getElementById('done').focus();
   });
 })();
