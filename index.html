@@ -87,6 +87,24 @@
 
   .last { padding-bottom: clamp(90px, 11vw, 160px); }
 
+  /* ---------- Craft reel ---------- */
+  .craft-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(24px, 3.4vw, 56px); align-items: start; }
+  .reel { margin: 0; }
+  .reel-frame { position: relative; aspect-ratio: 9 / 16; max-width: 100%; background: #0A0909; overflow: hidden; }
+  .reel-frame video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+  .reel-ui { position: absolute; left: 0; right: 0; bottom: 0; display: flex; justify-content: space-between; gap: 12px; padding: 14px 16px; background: linear-gradient(0deg, rgba(10,9,9,.55), rgba(10,9,9,0)); }
+  .reel-btn { color: #EFEAE2; font-size: var(--t-label); letter-spacing: .08em; text-transform: uppercase; font-weight: 500; padding: 8px 0; }
+  .reel-btn:focus-visible { outline: 1px solid #D9C19A; outline-offset: 4px; }
+  .reel figcaption { margin-top: 16px; font-size: var(--t-small); display: flex; justify-content: space-between; gap: 12px; }
+  .reel figcaption .t { font-family: var(--f-display); font-size: 1.15rem; }
+  .reel figcaption .m { color: var(--graphite); font-weight: 300; }
+  .craft-side { display: grid; gap: clamp(32px, 4vw, 56px); min-width: 0; }
+  .craft-side .facts { margin-top: 0; }
+  @media (max-width: 860px) {
+    .craft-grid { grid-template-columns: 1fr; }
+    .reel { width: min(100%, 420px); justify-self: center; }
+  }
+
   /* ---------- Emblem bands (from the URIAH emblem study) ---------- */
   .emblem-band { position: relative; overflow: hidden; min-height: min(70vh, 640px); display: grid; place-items: center; text-align: center; margin-top: clamp(90px, 11vw, 160px);
     padding-block: 96px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); border-block: 1px solid var(--hair); }
@@ -175,15 +193,28 @@
         </div>
         <aside><p class="lede">Before any gold is cast, we agree every part of the ring with you: the claws, the head, the width and depth of the band.</p><a class="link" href="atelier.html">Visit the atelier <span class="arr"></span></a></aside>
       </div>
-      <div class="row">
-        <figure><div class="ph"><img src="img/p103.jpg" alt="Cathédrale labelled: round diamond, dainty button claw, profile head, flat surface, shank width, shank depth, base shank." loading="lazy"></div><figcaption><span class="t">Cathédrale</span><span class="m">Profile head</span></figcaption></figure>
-        <figure><div class="ph"><img src="img/p020.jpg" alt="Céleste labelled: cushion cut, box claw with compass 4 prongs, shoulder, sidestones, bandwidth." loading="lazy"></div><figcaption><span class="t">Céleste</span><span class="m">Compass claws</span></figcaption></figure>
-        <figure><div class="ph"><img src="img/p069.jpg" alt="Constellation labelled: round cut, marquise cut, bandwidth, claw prongs, shank depth." loading="lazy"></div><figcaption><span class="t">Constellation</span><span class="m">Marquise trilogy</span></figcaption></figure>
-      </div>
-      <div class="facts">
-        <div><p class="label">Gold</p><h3>14K &amp; 18K</h3><p>Yellow, white and rose. 18K carries more pure gold and a deeper colour.</p></div>
-        <div><p class="label">Stones</p><h3>Four choices</h3><p>Natural diamond, lab-grown D VVS with IGI certificate, moissanite, sapphire and ruby.</p></div>
-        <div><p class="label">Setting</p><h3>Microscopic</h3><p>Pavé and channel sidestones are set under magnification so the metal almost disappears.</p></div>
+      <div class="craft-grid">
+        <figure class="reel">
+          <div class="reel-frame">
+            <video id="reel" src="img/video/craft-reel.mp4" poster="img/video/craft-reel-poster.jpg" muted loop playsinline preload="metadata" aria-label="Film: a VRIAH jeweller setting stones and finishing a ring at the bench, ending on the VRIAH logo and the words Crafted with precision."></video>
+            <div class="reel-ui">
+              <button class="reel-btn" id="reel-play" type="button" aria-pressed="false">Pause</button>
+              <button class="reel-btn" id="reel-sound" type="button" aria-pressed="false">Sound on</button>
+            </div>
+          </div>
+          <figcaption><span class="t">The art of craftsmanship</span><span class="m">At the bench · 18 s</span></figcaption>
+        </figure>
+        <div class="craft-side">
+          <div class="row">
+            <figure><div class="ph"><img src="img/p103.jpg" alt="Cathédrale labelled: round diamond, dainty button claw, profile head, flat surface, shank width, shank depth, base shank." loading="lazy"></div><figcaption><span class="t">Cathédrale</span><span class="m">Profile head</span></figcaption></figure>
+            <figure><div class="ph"><img src="img/p020.jpg" alt="Céleste labelled: cushion cut, box claw with compass 4 prongs, shoulder, sidestones, bandwidth." loading="lazy"></div><figcaption><span class="t">Céleste</span><span class="m">Compass claws</span></figcaption></figure>
+          </div>
+          <div class="facts">
+            <div><p class="label">Gold</p><h3>14K &amp; 18K</h3><p>Yellow, white and rose. 18K carries more pure gold and a deeper colour.</p></div>
+            <div><p class="label">Stones</p><h3>Four choices</h3><p>Natural diamond, lab-grown D VVS with IGI certificate, moissanite, sapphire and ruby.</p></div>
+            <div><p class="label">Setting</p><h3>Microscopic</h3><p>Pavé and channel sidestones are set under magnification so the metal almost disappears.</p></div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -253,6 +284,21 @@
 </script>
 <script src="js/site.js"></script>
 <script src="js/emblem.js"></script>
+<script>
+  /* Craft reel: plays silently while on screen, pauses when scrolled away; sound only on request */
+  (function () {
+    const v = document.getElementById('reel'); if (!v) return;
+    const play = document.getElementById('reel-play'), sound = document.getElementById('reel-sound');
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let wanted = !reduce;
+    const label = () => { play.textContent = v.paused ? 'Play' : 'Pause'; play.setAttribute('aria-pressed', String(v.paused)); sound.textContent = v.muted ? 'Sound on' : 'Sound off'; sound.setAttribute('aria-pressed', String(!v.muted)); };
+    v.addEventListener('play', label); v.addEventListener('pause', label);
+    play.addEventListener('click', () => { wanted = v.paused; wanted ? v.play().catch(() => {}) : v.pause(); });
+    sound.addEventListener('click', () => { v.muted = !v.muted; if (!v.muted && v.paused) { wanted = true; v.play().catch(() => {}); } label(); });
+    new IntersectionObserver(es => { if (es[0].isIntersecting) { if (wanted) v.play().catch(() => {}); } else v.pause(); }, { threshold: .25 }).observe(v);
+    label();
+  })();
+</script>
 <script>
   (function () {
     const mq = matchMedia('(max-width: 860px), (prefers-reduced-motion: reduce)');
