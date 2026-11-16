@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Appointments · VRIAH</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap">
+<link rel="stylesheet" href="css/site.css">
+<style>
+  :root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+  .ap { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 0 clamp(16px, 2vw, 32px); padding-bottom: clamp(100px, 12vw, 180px); }
+  .ap > * { min-width: 0; }
+  .ap-l { grid-column: 1 / span 5; }
+  .ap-l .ph { aspect-ratio: 4/5; }
+  .ap-r { grid-column: 7 / span 6; }
+  form { display: grid; gap: 0; border-top: 1px solid var(--hair); }
+  .f { display: grid; gap: 6px; padding: 18px 0; border-bottom: 1px solid var(--hair); }
+  .f.two { grid-template-columns: 1fr 1fr; gap: 24px; }
+  .f.two > div { display: grid; gap: 6px; min-width: 0; }
+  .f input, .f select, .f textarea { font: inherit; font-weight: 300; font-size: 1.05rem; border: 0; background: transparent; color: var(--ink); padding: 6px 0; width: 100%; min-width: 0; }
+  .f textarea { resize: vertical; min-height: 90px; }
+  .f input:focus, .f select:focus, .f textarea:focus { outline: none; }
+  .f:focus-within { border-bottom-color: var(--ink); }
+  .seg { display: flex; gap: 8px; flex-wrap: wrap; }
+  .seg label { cursor: pointer; }
+  .seg input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .seg span { display: inline-flex; align-items: center; min-height: 40px; padding: 0 16px; font-size: .9rem; box-shadow: inset 0 0 0 1px var(--hair); transition: all .3s var(--ease); }
+  .seg input:checked + span { background: var(--ink); color: var(--paper); box-shadow: inset 0 0 0 1px var(--ink); }
+  .seg input:focus-visible + span { outline: 1px solid var(--champagne); outline-offset: 3px; }
+  .choice { margin: 0 0 30px; padding: 22px 24px; background: var(--mist); display: grid; grid-template-columns: 72px 1fr; gap: 20px; align-items: center; }
+  .choice img { width: 72px; height: 90px; object-fit: cover; }
+  .choice p { margin: 0; }
+  .choice .t { font-family: var(--f-display); font-size: 1.3rem; }
+  .choice .m { color: var(--graphite); font-size: var(--t-small); font-weight: 300; }
+  .err { color: #8A2C1B; font-size: var(--t-small); min-height: 1.2em; margin: 14px 0 0; }
+  .submit { margin-top: 30px; display: flex; gap: 24px; align-items: center; flex-wrap: wrap; }
+  .done { padding: 40px 0; border-top: 1px solid var(--ink); }
+  .done h2 { font-size: var(--t-h2); margin: 18px 0 18px; }
+  .done dl { display: grid; grid-template-columns: auto 1fr; gap: 10px 28px; margin: 30px 0; font-size: .95rem; }
+  .done dt { color: var(--graphite); font-weight: 300; }
+  .done dd { margin: 0; }
+  .visit { margin-top: 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  .visit p { margin: 8px 0 0; color: var(--graphite); font-weight: 300; }
+  @media (max-width: 960px) { .ap-l { grid-column: 1 / span 8; margin-bottom: 70px; } .ap-r { grid-column: 1 / -1; } }
+  @media (max-width: 520px) { .f.two, .visit { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body data-page="appointment">
+<main>
+  <section class="intro wrap">
+    <div class="inner">
+      <p class="label gold"><span class="mark"></span>Private appointments</p>
+      <h1 class="display">An hour, <em>one to one.</em></h1>
+      <p class="lede">Try settings on your own hand, compare stones side by side, and leave with a drawing of your ring. In the atelier or by video.</p>
+    </div>
+  </section>
+  <section class="wrap"><div class="inner ap">
+    <div class="ap-l"><div class="obj" data-speed="-0.2"><div class="ph"><img id="ap-img" src="img/p045.jpg" alt="Silhouette solitaire shown on a black hand form."></div></div></div>
+    <div class="ap-r">
+      <div id="choice"></div>
+      <form id="form" novalidate>
+        <div class="f"><span class="label">Appointment</span>
+          <div class="seg" role="radiogroup" aria-label="Appointment type">
+            <label><input type="radio" name="kind" value="In the atelier" checked><span>In the atelier</span></label>
+            <label><input type="radio" name="kind" value="By video"><span>By video</span></label>
+          </div></div>
+        <div class="f two">
+          <div><label class="label" for="name">Name</label><input id="name" name="name" autocomplete="name" required></div>
+          <div><label class="label" for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required></div>
+        </div>
+        <div class="f two">
+          <div><label class="label" for="date">Preferred date</label><input id="date" name="date" type="date" required></div>
+          <div><label class="label" for="time">Time</label><select id="time" name="time"><option>Morning, 10:00–12:00</option><option>Afternoon, 13:00–16:00</option><option>Evening, 16:00–19:00</option></select></div>
+        </div>
+        <div class="f"><label class="label" for="piece">Piece of interest</label><select id="piece" name="piece"><option value="">Not decided yet</option></select></div>
+        <div class="f"><label class="label" for="note">Anything we should know</label><textarea id="note" name="note" placeholder="Your budget, the stone you have in mind, or a ring size."></textarea></div>
+        <p class="err" id="err" role="alert"></p>
+        <div class="submit"><button class="btn" type="submit">Request appointment</button></div>
+      </form>
+      <div class="visit">
+        <div><p class="label gold">Visits</p><p>By appointment only</p></div>
+        <div><p class="label gold">Before you come</p><p>Bring a ring that fits well, if you have one. It helps us size you.</p></div>
+      </div>
+    </div>
+  </div></section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="js/catalog.js"></script>
+<script src="js/site.js"></script>
+<script>
+(function () {
+  const V = window.VRIAH;
+  const sel = document.getElementById('piece');
+  sel.insertAdjacentHTML('beforeend', V.pieces.map(p => `<option value="${p.id}">${p.name}, ${p.line.toLowerCase()}</option>`).join(''));
+  const d = document.getElementById('date');
+  const tmr = new Date(Date.now() + 864e5); d.min = tmr.toISOString().slice(0, 10);
+
+  let choice = null;
+  function fromHash() {
+    const id = location.hash.slice(1); const p = V.get(id);
+    try { const c = JSON.parse(sessionStorage.getItem('vriah-choice') || 'null'); choice = c && p && c.id === p.id ? c : null; } catch (e) { choice = null; }
+    if (p) {
+      sel.value = p.id;
+      const img = document.getElementById('ap-img'); img.src = V.img(p.imgs[0]); img.alt = p.name;
+      document.getElementById('choice').innerHTML = `<div class="choice"><img src="${V.img(p.imgs[0])}" alt=""><div><p class="label">Your selection</p><p class="t">${p.name}</p><p class="m">${choice ? `${choice.stone}, ${choice.ct}, ${choice.gold}, size ${choice.size} · <span class="num">${choice.price}</span>` : p.line}</p></div></div>`;
+    }
+  }
+  addEventListener('hashchange', fromHash); fromHash();
+
+  document.getElementById('form').addEventListener('submit', e => {
+    e.preventDefault();
+    const f = e.target, err = document.getElementById('err');
+    const name = f.name.value.trim(), email = f.email.value.trim(), date = f.date.value;
+    if (!name) { err.textContent = 'Add your name so we know who to expect.'; f.name.focus(); return; }
+    if (!/.+@.+\..+/.test(email)) { err.textContent = 'Add an email address, like name@example.com, so we can confirm.'; f.email.focus(); return; }
+    if (!date) { err.textContent = 'Choose a preferred date. We will confirm or suggest another.'; f.date.focus(); return; }
+    err.textContent = '';
+    const p = V.get(sel.value);
+    const nice = new Date(date + 'T12:00').toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
+    f.outerHTML = `<div class="done" tabindex="-1" id="done">
+      <p class="label gold">Request ready</p>
+      <h2 class="display">Thank you, <em>${name.replace(/[<>&]/g, '')}.</em></h2>
+      <p class="prose">Here is the appointment you asked for. In this preview the request is not sent anywhere yet; on the live site it would go to the atelier.</p>
+      <dl><dt>Appointment</dt><dd>${f.kind.value}</dd><dt>Date</dt><dd>${nice}</dd><dt>Time</dt><dd>${f.time.value}</dd>
+      <dt>Piece</dt><dd>${p ? p.name + (choice && choice.id === p.id ? ` · ${choice.stone}, ${choice.ct}, ${choice.gold} · ${choice.price}` : '') : 'Not decided yet'}</dd></dl>
+      <a class="link" href="collection.html">Keep browsing the collection <span class="arr"></span></a></div>`;
+    document.getElementById('done').focus();
+  });
+})();
+</script>
+</body>
+</html>

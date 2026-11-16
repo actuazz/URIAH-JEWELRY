@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>VRIAH Fine Jewellery</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="VRIAH fine jewellery: engagement rings, bands and earrings, made to order.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap">
+<link rel="stylesheet" href="css/site.css">
+<style>
+  /* One system for the whole page, taken from Room II:
+     white wall · photographs whole, at one height · captions on one line · headings in the same place. */
+  .sec { padding-block: clamp(90px, 11vw, 160px) 0; }
+  .sec-head { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 0 clamp(16px, 2vw, 32px); align-items: end; margin-bottom: clamp(40px, 5vw, 64px); }
+  .sec-head > div { grid-column: 1 / span 7; min-width: 0; }
+  .sec-head > aside { grid-column: 9 / span 4; min-width: 0; }
+  .sec-head .display { font-size: var(--t-h1); margin-top: 20px; }
+  .sec-head .lede { margin: 0 0 18px; }
+  @media (max-width: 860px) { .sec-head > div, .sec-head > aside { grid-column: 1 / -1; } .sec-head > aside { margin-top: 22px; } }
+
+  /* Equal row: every photograph the same width, so the same height */
+  .row { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: clamp(16px, 2.4vw, 40px); }
+  .row figure { margin: 0; min-width: 0; }
+  .row figcaption { margin-top: 16px; font-size: var(--t-small); display: flex; justify-content: space-between; gap: 12px; }
+  .row figcaption .t { font-family: var(--f-display); font-size: 1.15rem; }
+  .row figcaption .m { color: var(--graphite); font-weight: 300; }
+  @media (max-width: 760px) {
+    .row { grid-auto-columns: 74vw; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; margin-right: calc(-1 * var(--pad) - var(--gutter-r)); padding-right: 16px; }
+    .row::-webkit-scrollbar { display: none; }
+    .row > * { scroll-snap-align: start; }
+  }
+
+  /* ---------- Hero ---------- */
+  .hero { padding-top: calc(clamp(120px, 13vw, 170px) + env(safe-area-inset-top, 0px)); }
+  .hero .display { font-size: clamp(3.2rem, 8vw, 7.4rem); }
+  .hero .ctas { display: flex; gap: 28px; align-items: center; flex-wrap: wrap; }
+
+  /* ---------- Signature ---------- */
+  .cad-sheet { display: block; background: #0a0909; }
+  .cad-sheet img { width: 100%; height: auto; display: block; }
+  @media (max-width: 760px) { .cad-sheet { overflow-x: auto; } .cad-sheet img { width: 760px; max-width: none; } }
+  .spec { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 0 clamp(16px, 2vw, 32px); margin-top: clamp(40px, 5vw, 64px); align-items: end; }
+  .spec dl { grid-column: 1 / span 8; margin: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--ink); }
+  .spec dl > div { padding: 16px 16px 0 0; }
+  .spec dt { color: var(--graphite); font-size: var(--t-label); letter-spacing: .08em; text-transform: uppercase; font-weight: 500; }
+  .spec dd { margin: 8px 0 0; font-size: .95rem; }
+  .spec .buy { grid-column: 9 / span 4; display: grid; gap: 16px; justify-items: start; }
+  .spec .buy b { font-family: var(--f-display); font-weight: 400; font-size: 1.9rem; }
+  @media (max-width: 860px) {
+    .spec dl { grid-column: 1 / -1; grid-template-columns: 1fr 1fr; row-gap: 18px; }
+    .spec .buy { grid-column: 1 / -1; margin-top: 36px; }
+  }
+
+  /* ---------- Rooms: pinned horizontal rows (Room II) ---------- */
+  .hs { position: relative; margin-top: clamp(90px, 11vw, 160px); border-top: 1px solid var(--hair); }
+  .hs-pin { position: sticky; top: 0; height: 100vh; overflow: hidden; display: flex; flex-direction: column; justify-content: center; }
+  .hs-track { display: flex; align-items: flex-start; gap: clamp(36px, 4vw, 72px); padding-left: max(var(--pad), calc((100vw - 1440px) / 2 + var(--pad))); padding-right: 10vw; will-change: transform; }
+  .hs-intro { flex: 0 0 min(400px, 80vw); align-self: center; }
+  .hs-intro .display { font-size: var(--t-h1); margin: 22px 0 26px; }
+  .hs-item { flex: 0 0 auto; width: calc(56vh * 940 / 1200); }
+  .hs-item.low { margin-top: 12vh; }
+  .hs-end { flex: 0 0 auto; align-self: center; display: grid; gap: 22px; justify-items: start; }
+  .hs-end .display { font-size: var(--t-h2); }
+  .hs-bar { position: absolute; left: 50%; bottom: 5vh; width: min(320px, 50vw); height: 1px; background: var(--hair); transform: translateX(-50%); }
+  .hs-bar i { position: absolute; inset: 0; background: var(--ink); transform-origin: left; transform: scaleX(0); }
+  @media (max-width: 860px), (prefers-reduced-motion: reduce) {
+    .hs { height: auto !important; }
+    .hs-pin { position: relative; height: auto; padding-block: 80px 20px; }
+    .hs-track { transform: none !important; overflow-x: auto; scroll-snap-type: x mandatory; gap: 16px; padding-right: 16px; scrollbar-width: none; overscroll-behavior-x: contain; }
+    .hs-track::-webkit-scrollbar { display: none; }
+    .hs-track > * { scroll-snap-align: start; }
+    .hs-item { width: 68vw; }
+    .hs-item.low { margin-top: 0; }
+    .hs-intro { flex-basis: 76vw; }
+    .hs-bar { display: none; }
+  }
+
+  /* ---------- Craft ---------- */
+  .facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 2.4vw, 40px); margin-top: clamp(40px, 5vw, 64px); border-top: 1px solid var(--ink); }
+  .facts > div { padding-top: 18px; }
+  .facts h3 { font-family: var(--f-display); font-weight: 400; font-size: var(--t-h3); margin: 12px 0 10px; }
+  .facts p { margin: 0; color: var(--graphite); font-weight: 300; font-size: .95rem; max-width: 30em; }
+  @media (max-width: 760px) { .facts { grid-template-columns: 1fr; } }
+
+  .last { padding-bottom: clamp(90px, 11vw, 160px); }
+
+  /* ---------- Emblem bands (from the URIAH emblem study) ---------- */
+  .emblem-band { position: relative; overflow: hidden; min-height: min(70vh, 640px); display: grid; place-items: center; text-align: center; margin-top: clamp(90px, 11vw, 160px);
+    padding-block: 96px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); border-block: 1px solid var(--hair); }
+  .emblem-band canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; cursor: crosshair; touch-action: pan-y; }
+  .emblem-copy { position: relative; z-index: 1; pointer-events: none; max-width: 640px; display: grid; gap: 20px; justify-items: center; }
+  .emblem-copy::before { content: ""; position: absolute; z-index: -1; inset: -70px -120px; background: radial-gradient(closest-side, var(--paper) 55%, transparent); }
+  .emblem-copy .display { font-size: clamp(2.4rem, 5.4vw, 4.6rem); }
+  .emblem-copy .btn { pointer-events: auto; margin-top: 8px; }
+  .emblem-hint { margin: 0; font-size: var(--t-small); color: var(--graphite); }
+  .emblem-band--dark { background: #0A0909; color: #EFEAE2; border: 0; margin-bottom: 0; }
+  .emblem-band--dark + .sec { padding-top: clamp(90px, 11vw, 160px); }
+  .emblem-band--dark .emblem-copy::before { background: radial-gradient(closest-side, #0A0909 50%, transparent); }
+  .emblem-band--dark .label { color: #D9C19A; }
+  .emblem-band--dark .btn { background: #EFEAE2; color: #0D0C0B; }
+  .emblem-band--dark .btn:hover { background: #E0A84C; }
+  .emblem-pause { position: absolute; z-index: 2; right: max(16px, env(safe-area-inset-right, 0px)); bottom: 18px; font-size: var(--t-label); letter-spacing: .08em; text-transform: uppercase; font-weight: 500; color: #D9C19A; padding: 8px 0; }
+  .emblem-pause:focus-visible { outline: 1px solid #D9C19A; outline-offset: 4px; }
+</style>
+<link rel="icon" type="image/svg+xml" href="img/logo/monogram.svg">
+<style>[hidden]{display:none!important}</style>
+</head>
+<body data-page="home">
+<main>
+  <!-- Hero -->
+  <section class="hero wrap" aria-labelledby="hero-h">
+    <div class="inner">
+      <div class="sec-head">
+        <div>
+          <p class="label gold"><span class="mark"></span>Fine jewellery · Made to order</p>
+          <h1 class="display" id="hero-h">Light, <em>held still.</em></h1>
+        </div>
+        <aside>
+          <p class="lede">Engagement rings, bands and earrings, drawn and set one at a time in 14K and 18K gold.</p>
+          <div class="ctas"><a class="btn" href="collection.html">View the collection</a><a class="link" href="appointment.html">Book a viewing <span class="arr"></span></a></div>
+        </aside>
+      </div>
+      <div class="row" id="hero-row"></div>
+    </div>
+  </section>
+
+  <!-- Signature piece: the CAD sheet -->
+  <section class="sec wrap" aria-labelledby="sig-h">
+    <div class="inner">
+      <div class="sec-head">
+        <div>
+          <p class="label gold"><span class="mark"></span>The signature piece</p>
+          <h2 class="display" id="sig-h">Drawn to the <em>tenth of a millimetre.</em></h2>
+        </div>
+        <aside><p class="lede">Every VRIAH ring starts as a CAD drawing. This is the six-prong solitaire with a 2.00 ct lab-grown round brilliant, shown from every side with its exact measurements.</p><a class="btn" href="piece.html#six-prong-200">View the piece</a></aside>
+      </div>
+      <a class="cad-sheet" href="piece.html#six-prong-200"><img src="img/cad-200ct.jpg" width="1672" height="941" loading="lazy" alt="VRIAH CAD sheet: six-prong solitaire, 2.00 ct round brilliant lab-grown diamond, straight 1.60 mm band, 7.8 mm total height, 17.3 mm inner diameter (US 7). Perspective, top, side, front, gallery and band views, prong and on-hand details."></a>
+    </div>
+  </section>
+
+  <!-- Room I -->
+  <section class="hs" data-room="1" aria-labelledby="r1-h">
+    <div class="hs-pin">
+      <div class="hs-track">
+        <div class="hs-intro">
+          <p class="label gold"><span class="mark"></span>Room I</p>
+          <h2 class="display" id="r1-h">White <em>gold</em></h2>
+          <p class="lede">Solitaires, halos and bridal sets, read left to right.</p>
+        </div>
+      </div>
+      <div class="hs-bar" aria-hidden="true"><i></i></div>
+    </div>
+  </section>
+
+  <!-- Emblem band (light) -->
+  <section class="emblem-band" aria-label="Our signature">
+    <canvas data-emblem="light" aria-hidden="true"></canvas>
+    <div class="emblem-copy">
+      <p class="label gold">Our signature</p>
+      <p class="display">Timeless. Elegant. <em>Modern.</em></p>
+      <p class="emblem-hint">Move across the pattern. Tap or click to send a ripple.</p>
+    </div>
+  </section>
+
+  <!-- Craft -->
+  <section class="sec wrap" aria-labelledby="craft-h">
+    <div class="inner">
+      <div class="sec-head">
+        <div>
+          <p class="label gold"><span class="mark"></span>Material &amp; craft</p>
+          <h2 class="display" id="craft-h">Drawn part by <em>part.</em></h2>
+        </div>
+        <aside><p class="lede">Before any gold is cast, we agree every part of the ring with you: the claws, the head, the width and depth of the band.</p><a class="link" href="atelier.html">Visit the atelier <span class="arr"></span></a></aside>
+      </div>
+      <div class="row">
+        <figure><div class="ph"><img src="img/p103.jpg" alt="Cathédrale labelled: round diamond, dainty button claw, profile head, flat surface, shank width, shank depth, base shank." loading="lazy"></div><figcaption><span class="t">Cathédrale</span><span class="m">Profile head</span></figcaption></figure>
+        <figure><div class="ph"><img src="img/p020.jpg" alt="Céleste labelled: cushion cut, box claw with compass 4 prongs, shoulder, sidestones, bandwidth." loading="lazy"></div><figcaption><span class="t">Céleste</span><span class="m">Compass claws</span></figcaption></figure>
+        <figure><div class="ph"><img src="img/p069.jpg" alt="Constellation labelled: round cut, marquise cut, bandwidth, claw prongs, shank depth." loading="lazy"></div><figcaption><span class="t">Constellation</span><span class="m">Marquise trilogy</span></figcaption></figure>
+      </div>
+      <div class="facts">
+        <div><p class="label">Gold</p><h3>14K &amp; 18K</h3><p>Yellow, white and rose. 18K carries more pure gold and a deeper colour.</p></div>
+        <div><p class="label">Stones</p><h3>Four choices</h3><p>Natural diamond, lab-grown D VVS with IGI certificate, moissanite, sapphire and ruby.</p></div>
+        <div><p class="label">Setting</p><h3>Microscopic</h3><p>Pavé and channel sidestones are set under magnification so the metal almost disappears.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Room II -->
+  <section class="hs" data-room="2" aria-labelledby="r2-h">
+    <div class="hs-pin">
+      <div class="hs-track">
+        <div class="hs-intro">
+          <p class="label gold"><span class="mark"></span>Room II</p>
+          <h2 class="display" id="r2-h">Warm <em>gold</em></h2>
+          <p class="lede">Yellow and rose gold pieces, read left to right.</p>
+        </div>
+      </div>
+      <div class="hs-bar" aria-hidden="true"><i></i></div>
+    </div>
+  </section>
+
+  <!-- Emblem band (dark) -->
+  <section class="emblem-band emblem-band--dark" aria-label="The collection">
+    <canvas data-emblem="dark" aria-hidden="true"></canvas>
+    <div class="emblem-copy">
+      <p class="label">The collection</p>
+      <p class="display">Made to order, <em>one ring at a time.</em></p>
+      <a class="btn" href="collection.html">View the collection</a>
+    </div>
+    <button class="emblem-pause" type="button" data-emblem-pause aria-pressed="false">Pause motion</button>
+  </section>
+
+  <!-- Earrings & appointments -->
+  <section class="sec last wrap" aria-labelledby="end-h">
+    <div class="inner">
+      <div class="sec-head">
+        <div>
+          <p class="label gold"><span class="mark"></span>By appointment</p>
+          <h2 class="display" id="end-h">See it on your <em>own hand.</em></h2>
+        </div>
+        <aside><p class="lede">Try settings, compare stones side by side and leave with a drawing of your ring. In the atelier or by video.</p><a class="btn" href="appointment.html">Book a private viewing</a></aside>
+      </div>
+      <div class="row" id="end-row"></div>
+    </div>
+  </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="js/catalog.js"></script>
+<script>
+  (function () {
+    const V = window.VRIAH;
+    const price = p => { const f = V.fromPrice(p); return f ? 'From ' + V.peso(f) : 'On request'; };
+    const fig = (id, im) => { const p = V.get(id); return `<figure><a class="obj" href="piece.html#${p.id}"><div class="ph"><img src="${V.img(im)}" alt="${p.name}, ${p.line.toLowerCase()}" loading="lazy"></div></a><figcaption><span class="t">${p.name}</span><span class="m num">${price(p)}</span></figcaption></figure>`; };
+    const card = (id, im) => { const p = V.get(id); return `<a class="obj" href="piece.html#${p.id}"><div class="ph"><img src="${V.img(im)}" alt="${p.name}, ${p.line.toLowerCase()}" loading="lazy"></div><div class="cap"><span><span class="t">${p.name}</span> <span class="m">· ${p.line}</span></span><span class="m num">${price(p)}</span></div></a>`; };
+
+    document.getElementById('hero-row').innerHTML = [['heritage', 'p001'], ['celeste', 'p021'], ['nacre', 'p122']].map(a => fig(...a)).join('');
+    document.getElementById('end-row').innerHTML = [['coeur', 'p110'], ['nacre', 'p121'], ['silhouette', 'p044']].map(a => fig(...a)).join('');
+
+    const rooms = {
+      1: [['lumiere', 'p007'], ['diademe', 'p008'], ['solene', 'p037'], ['silhouette', 'p045'], ['reflet', 'p011'], ['coeur', 'p111'], ['ovale', 'p005'], ['ligne', 'p053'], ['givre', 'p012']],
+      2: [['couronne', 'p107'], ['soleil', 'p098'], ['constellation', 'p070'], ['emeraude', 'p076'], ['heritage', 'p001'], ['rosee', 'p025'], ['blush', 'p057'], ['nocturne', 'p080'], ['cathedrale', 'p104']]
+    };
+    document.querySelectorAll('[data-room]').forEach(sec => {
+      const list = rooms[sec.dataset.room];
+      sec.querySelector('.hs-track').insertAdjacentHTML('beforeend', list.map(([id, im], i) => `<div class="hs-item${i % 2 ? ' low' : ''}">${card(id, im)}</div>`).join('') +
+        `<div class="hs-end"><p class="label gold">${V.pieces.length} pieces in all</p><p class="display">The full <em>collection</em></p><a class="btn" href="collection.html">View the collection</a></div>`);
+    });
+  })();
+</script>
+<script src="js/site.js"></script>
+<script src="js/emblem.js"></script>
+<script>
+  (function () {
+    const mq = matchMedia('(max-width: 860px), (prefers-reduced-motion: reduce)');
+    const rooms = [...document.querySelectorAll('[data-room]')].map(sec => ({ sec, track: sec.querySelector('.hs-track'), fill: sec.querySelector('.hs-bar i'), dist: 0 }));
+    function size() {
+      rooms.forEach(r => {
+        if (mq.matches) { r.sec.style.height = ''; return; }
+        r.dist = Math.max(0, r.track.scrollWidth - innerWidth);
+        r.sec.style.height = (innerHeight + r.dist) + 'px';
+      });
+      update();
+    }
+    function update() {
+      if (mq.matches) return;
+      rooms.forEach(r => {
+        const p = Math.min(1, Math.max(0, -r.sec.getBoundingClientRect().top / Math.max(1, r.dist)));
+        r.track.style.transform = `translate3d(${(-p * r.dist).toFixed(1)}px,0,0)`;
+        r.fill.style.transform = `scaleX(${p.toFixed(4)})`;
+      });
+    }
+    const L = window.VRIAH_UI && window.VRIAH_UI.lenis;
+    if (L) L.on('scroll', update); else addEventListener('scroll', update, { passive: true });
+    addEventListener('resize', size); mq.addEventListener('change', size); addEventListener('load', size); size();
+  })();
+</script>
+</body>
+</html>

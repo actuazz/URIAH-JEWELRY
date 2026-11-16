@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Atelier · VRIAH</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap">
+<link rel="stylesheet" href="css/site.css">
+<style>
+  :root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+  .g12 { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 0 clamp(16px, 2vw, 32px); }
+  .g12 > * { min-width: 0; }
+  .a-intro .txt { grid-column: 1 / span 6; align-self: end; padding-bottom: 4vw; }
+  .a-intro .pic { grid-column: 8 / span 5; }
+  .a-intro .pic .ph { aspect-ratio: 3/4; }
+  .sec { padding-block: clamp(100px, 13vw, 200px); }
+  .sec + .sec { border-top: 1px solid var(--hair); }
+  .sec h2 { font-size: var(--t-h1); margin: 22px 0 30px; }
+  .head-l { grid-column: 1 / span 5; }
+  .body-r { grid-column: 7 / span 6; }
+  .steps { list-style: none; margin: 0; padding: 0; counter-reset: s; border-top: 1px solid var(--hair); }
+  .steps li { counter-increment: s; display: grid; grid-template-columns: 64px 1fr; gap: 20px; padding: 28px 0; border-bottom: 1px solid var(--hair); }
+  .steps li::before { content: counter(s, upper-roman) "."; font-family: var(--f-display); font-style: italic; color: var(--champagne-ink); font-size: 1.25rem; line-height: 1.3; }
+  .steps h3, .gloss dt { font-family: var(--f-display); font-weight: 400; font-size: var(--t-h3); margin: 0 0 6px; }
+  .steps p { margin: 0; color: var(--graphite); font-weight: 300; }
+  .tbl-wrap { overflow-x: auto; margin-top: 50px; }
+  table { border-collapse: collapse; width: 100%; min-width: 640px; font-size: .95rem; }
+  th, td { text-align: left; padding: 16px 18px 16px 0; border-bottom: 1px solid var(--hair); vertical-align: top; }
+  thead th { font-size: var(--t-label); letter-spacing: .08em; text-transform: uppercase; font-weight: 500; color: var(--graphite); border-bottom-color: var(--ink); }
+  tbody th { font-family: var(--f-display); font-weight: 400; font-size: 1.15rem; }
+  td { font-weight: 300; color: var(--graphite); }
+  td.num { color: var(--ink); font-weight: 400; white-space: nowrap; }
+  .cap-note { font-size: var(--t-small); color: var(--graphite); margin-top: 16px; font-weight: 300; }
+  .gold-cmp { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 3vw, 48px); margin-top: 10px; }
+  .gold-cmp > div { padding-top: 28px; border-top: 1px solid var(--ink); }
+  .gold-cmp .big { font-family: var(--f-display); font-size: clamp(3rem, 6vw, 5rem); line-height: 1; margin: 14px 0 6px; }
+  .gold-cmp p { color: var(--graphite); font-weight: 300; margin: 0; }
+  .purity { height: 2px; background: var(--hair); margin: 18px 0; position: relative; }
+  .purity i { position: absolute; left: 0; top: 0; bottom: 0; background: var(--champagne); }
+  .gloss { display: grid; grid-template-columns: 1fr 1fr; gap: 0 clamp(24px, 4vw, 64px); margin: 0; }
+  .gloss > div { padding: 22px 0; border-bottom: 1px solid var(--hair); }
+  .gloss dd { margin: 0; color: var(--graphite); font-weight: 300; font-size: .97rem; }
+  .figs { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: clamp(16px, 2vw, 32px); margin-top: 70px; align-items: start; }
+  .figs .a { grid-column: 1 / span 4; } .figs .b { grid-column: 5 / span 4; } .figs .c { grid-column: 9 / span 4; }
+  .figs .ph { aspect-ratio: 4/5; }
+  .short { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(24px, 4vw, 64px); }
+  .short h3 { font-family: var(--f-display); font-weight: 400; font-size: var(--t-h3); margin: 16px 0 12px; }
+  .short p { color: var(--graphite); font-weight: 300; margin: 0 0 10px; }
+  @media (max-width: 960px) {
+    .a-intro .txt, .a-intro .pic, .head-l, .body-r { grid-column: 1 / -1; }
+    .a-intro .pic { margin-top: 40px; width: 80%; justify-self: end; }
+    .gloss, .short { grid-template-columns: 1fr; }
+    .figs .a, .figs .b, .figs .c { grid-column: 1 / -1; }
+  }
+  @media (max-width: 520px) { .gold-cmp { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body data-page="atelier">
+<main>
+  <section class="intro wrap">
+    <div class="inner g12 a-intro">
+      <div class="txt">
+        <p class="label gold"><span class="mark"></span>The atelier</p>
+        <h1 class="display">Slow work, <em>measured in tenths of a millimetre.</em></h1>
+        <p class="lede">VRIAH rings are made one at a time, to order. This page explains how, what you can choose, and how to care for the piece afterwards.</p>
+      </div>
+      <div class="pic"><div class="obj" data-speed="-0.2"><div class="ph"><img src="img/p094.jpg" alt="The VRIAH monogram lit in gold above raw stone."></div></div></div>
+    </div>
+  </section>
+
+  <section class="sec wrap" id="process">
+    <div class="inner g12">
+      <div class="head-l"><p class="label gold"><span class="mark"></span>How a ring is made</p><h2 class="display">Five <em>stages</em></h2><p class="prose">Every ring passes through the same five stages, in this order.</p></div>
+      <div class="body-r">
+        <ol class="steps">
+          <li><div><h3>Consultation</h3><p>We meet in private or by video. You try sample settings and tell us how the ring will be worn.</p></div></li>
+          <li><div><h3>Drawing</h3><p>The ring is drawn part by part: centre stone, claws, head, shank width, shank depth and base shank.</p></div></li>
+          <li><div><h3>Stone selection</h3><p>We show you stones side by side under daylight lamps. Certified stones come with their IGI report.</p></div></li>
+          <li><div><h3>Casting and setting</h3><p>The band is cast in 14K or 18K gold. Pavé and channel stones are set under magnification in a microscopic setting.</p></div></li>
+          <li><div><h3>Finishing</h3><p>Every surface is polished or brushed by hand, the ring is sized and checked, then presented in its box.</p></div></li>
+        </ol>
+      </div>
+      <div class="figs" style="grid-column:1/-1">
+        <div class="a rv"><div class="obj"><div class="ph"><img src="img/p029.jpg" alt="Aube annotated: 2.5 mm bandwidth, thickness, dainty claw, base of the shank, 18 karat rose gold, channel-set sidestones." loading="lazy"></div></div></div>
+        <div class="b rv"><div class="obj"><div class="ph"><img src="img/p036.jpg" alt="Solène annotated: dainty round claw, bandwidth, sidestones, 14K white gold, channel setting." loading="lazy"></div></div></div>
+        <div class="c rv"><div class="obj"><div class="ph"><img src="img/p069.jpg" alt="Constellation annotated: round cut, marquise cut, bandwidth, claw prongs, shank depth." loading="lazy"></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec wrap" id="stones">
+    <div class="inner">
+      <div class="g12">
+        <div class="head-l"><p class="label gold"><span class="mark"></span>Stone guide</p><h2 class="display">Four ways to <em>hold light</em></h2></div>
+        <div class="body-r prose"><p>Every ring in the collection can be made with any of these stones. The table shows the sizes we offer and what each costs on Étoile, our six-claw solitaire, in 14K gold.</p></div>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th scope="col">Stone</th><th scope="col">Grade</th><th scope="col">Sizes offered</th><th scope="col">Étoile, smallest size</th><th scope="col">Étoile, 1.0 ct</th></tr></thead>
+          <tbody id="stone-rows"></tbody>
+        </table>
+      </div>
+      <p class="cap-note" id="certificates">Lab-grown diamonds are D colour and VVS clarity, with an IGI certificate. Pink diamonds are IGI certified and priced on the lab-grown scale. Natural diamonds are offered from .20 to .90 carat on most designs.</p>
+    </div>
+  </section>
+
+  <section class="sec wrap" id="gold">
+    <div class="inner g12">
+      <div class="head-l"><p class="label gold"><span class="mark"></span>Gold</p><h2 class="display">14K or <em>18K</em></h2><p class="prose">A karat is one twenty-fourth part. All three colours are available in both.</p></div>
+      <div class="body-r">
+        <div class="gold-cmp">
+          <div><p class="label">14 karat</p><p class="big num">58.5%</p><div class="purity"><i style="width:58.5%"></i></div><p>Fourteen parts gold in twenty-four. Harder and more resistant to scratches, a lighter colour. The better choice for very fine claws and daily wear.</p></div>
+          <div><p class="label">18 karat</p><p class="big num">75%</p><div class="purity"><i style="width:75%"></i></div><p>Eighteen parts gold in twenty-four. A richer, deeper colour and a heavier feel. Softer, so it develops a gentle patina over time.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec wrap" id="anatomy">
+    <div class="inner">
+      <div class="g12" style="margin-bottom:50px">
+        <div class="head-l"><p class="label gold"><span class="mark"></span>Anatomy of a ring</p><h2 class="display">The words we <em>use</em></h2></div>
+        <div class="body-r prose"><p>You will see these terms on every piece in the collection and in our drawings.</p></div>
+      </div>
+      <dl class="gloss">
+        <div><dt>Claw or prong</dt><dd>The small metal arms that hold the centre stone. Dainty round claws are fine and rounded; box claws are squared; button claws end in a small dome.</dd></div>
+        <div><dt>Compass prongs</dt><dd>Four claws placed north, south, east and west, so a square stone sits as a diamond shape.</dd></div>
+        <div><dt>Halo</dt><dd>A ring of small diamonds around the centre stone, which makes it look larger.</dd></div>
+        <div><dt>Pavé</dt><dd>Small diamonds set close together so the metal surface is almost covered.</dd></div>
+        <div><dt>Channel setting</dt><dd>Sidestones held between two walls of metal, with no claws between them.</dd></div>
+        <div><dt>Microscopic setting</dt><dd>Sidestones set under magnification with the smallest possible amount of metal showing.</dd></div>
+        <div><dt>Shank width (bandwidth)</dt><dd>How wide the band is when you look down at your hand.</dd></div>
+        <div><dt>Shank depth (thickness)</dt><dd>How thick the band is from the inside of the ring to the outside.</dd></div>
+        <div><dt>Alluring band</dt><dd>A band that narrows toward the centre stone. A semi-round surface is domed; a flat surface is level.</dd></div>
+        <div><dt>Profile head</dt><dd>The part of the setting that raises the stone. A higher head lets more light in from the side.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="sec wrap">
+    <div class="inner short">
+      <div id="sizing"><p class="label gold">Ring sizing</p><h3>Finding your size</h3><p>We size in US sizes from 4 to 9, including half sizes. Measure at the end of the day, when fingers are largest.</p><p>If you are not sure, choose "Not sure yet" and we will size you at your appointment.</p></div>
+      <div id="care"><p class="label gold">Care</p><h3>Caring for your ring</h3><p>Take it off for the gym, swimming and cleaning. Soak it in warm water with mild soap and brush gently under the stone with a soft brush.</p><p>Have the claws checked by a jeweller once a year, and sooner if the stone ever feels loose.</p></div>
+      <div><p class="label gold">Appointments</p><h3>See it in person</h3><p>Private viewings are one to one, in the atelier or by video.</p><p><a class="link" href="appointment.html">Book a viewing <span class="arr"></span></a></p></div>
+    </div>
+  </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="js/catalog.js"></script>
+<script>
+(function () {
+  const V = window.VRIAH, t = V.tiers.E;
+  const grade = { natural: 'Graded per stone', lab: 'D colour, VVS, IGI certified', moissanite: 'Colourless', gems: 'Sapphire, ruby and other gems' };
+  const ct = c => c < 1 ? '.' + String(Math.round(c * 100)).padStart(2, '0') : c.toFixed(1);
+  document.getElementById('stone-rows').innerHTML = Object.entries(V.stones).map(([k, s]) => {
+    const r = t[k], one = r.find(x => x[0] === 1);
+    return `<tr><th scope="row">${s.label.split(' · ')[0]}</th><td>${grade[k]}</td><td class="num">${ct(r[0][0])} – ${ct(r[r.length - 1][0])} ct</td><td class="num">${V.peso(r[0][1])} <span style="color:var(--graphite);font-weight:300">(${ct(r[0][0])} ct)</span></td><td class="num">${one ? V.peso(one[1]) : '<span style="color:var(--graphite);font-weight:300">Up to .90 ct</span>'}</td></tr>`;
+  }).join('');
+})();
+</script>
+<script src="js/site.js"></script>
+</body>
+</html>

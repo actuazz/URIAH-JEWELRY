@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Piece · VRIAH</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap">
+<link rel="stylesheet" href="css/site.css">
+<style>
+  :root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+  .pd { padding-top: clamp(64px, 8vw, 110px); }
+  .pd-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 0 clamp(16px, 2vw, 32px); align-items: start; }
+  /* CAD sheet, after the VRIAH 2.00 ct sheet: black ground, serif caps, hairlines, specs column */
+  .sheet { background: #0a0909; color: #EFEAE2; padding-block: calc(96px + env(safe-area-inset-top, 0px)) clamp(40px, 5vw, 70px); }
+  .sheet-img img { width: 100%; height: auto; display: block; }
+  .sh-tap { margin: 14px 0 0; text-align: center; font-size: var(--t-label); letter-spacing: .08em; text-transform: uppercase; color: rgba(239,234,226,.6); }
+  .sh-head { display: flex; justify-content: space-between; align-items: end; }
+  .sh-word { margin: 0; line-height: 0; color: #EFEAE2; }
+  .sh-word .logo { width: clamp(200px, 26vw, 330px); }
+  .sh-sub { font-family: var(--f-display); letter-spacing: .08em; font-size: clamp(.9rem, 1.6vw, 1.25rem); margin: 10px 0 0; }
+  .sh-line { margin: 20px 0 0; padding: 14px 0; border-top: 1px solid rgba(239,234,226,.35); font-family: var(--f-display); letter-spacing: .08em; font-size: clamp(.8rem, 1.2vw, 1rem); display: flex; flex-wrap: wrap; gap: 6px 18px; }
+  .sh-line i { font-style: normal; opacity: .5; }
+  .sh-body { display: grid; grid-template-columns: minmax(0, 1fr) clamp(240px, 24vw, 320px); gap: clamp(24px, 3vw, 48px); margin-top: clamp(20px, 3vw, 36px); }
+  .sh-views { display: grid; gap: clamp(20px, 2.4vw, 32px); min-width: 0; }
+  .sh-row { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: clamp(12px, 1.6vw, 24px); }
+  .sh-row.n1 { grid-auto-columns: minmax(0, 520px); justify-content: start; }
+  .sh-strip { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; padding-top: clamp(16px, 2vw, 24px); border-top: 1px solid rgba(239,234,226,.2); }
+  .sheet figure { margin: 0; min-width: 0; }
+  .sheet figure img { width: 100%; aspect-ratio: 940 / 1200; object-fit: cover; display: block; box-shadow: 0 0 0 1px rgba(239,234,226,.12); }
+  .sheet figcaption { margin-top: 10px; text-align: center; font-family: var(--f-display); letter-spacing: .08em; font-size: .78rem; }
+  .sheet figure.sm figcaption { font-size: .66rem; letter-spacing: .08em; }
+  .sh-spec { border-left: 1px solid rgba(239,234,226,.35); padding-left: clamp(18px, 2vw, 30px); min-width: 0; }
+  .sh-h { font-family: var(--f-display); letter-spacing: .08em; font-size: .95rem; margin: 0 0 14px; }
+  .sh-spec dl { margin: 0 0 26px; padding-bottom: 22px; border-bottom: 1px solid rgba(239,234,226,.35); display: grid; gap: 12px; }
+  .sh-spec dt { font-family: var(--f-display); font-size: 1.02rem; }
+  .sh-spec dd { margin: 2px 0 0; font-family: var(--f-display); font-size: 1rem; color: rgba(239,234,226,.78); }
+  .sh-spec ul { margin: 0; padding-left: 18px; display: grid; gap: 10px; font-family: var(--f-display); font-size: 1rem; color: rgba(239,234,226,.88); }
+  .sh-foot { margin: clamp(26px, 3vw, 40px) 0 0; padding-top: 14px; border-top: 1px solid rgba(239,234,226,.35); text-align: center; font-family: var(--f-display); letter-spacing: .08em; font-size: .85rem; }
+  .sh-foot i { font-style: normal; margin: 0 14px; }
+  @media (max-width: 900px) {
+    .sh-body { grid-template-columns: 1fr; }
+    .sh-spec { border-left: 0; padding-left: 0; border-top: 1px solid rgba(239,234,226,.35); padding-top: 24px; }
+    .sh-row { grid-auto-flow: row; grid-auto-columns: auto; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .sh-row.n1 { grid-template-columns: minmax(0, 1fr); }
+    .sh-row > :first-child:nth-last-child(3) { grid-column: 1 / -1; }
+    .sh-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+  .about { grid-column: 1 / span 6; }
+  .gal { grid-column: 1 / span 7; display: grid; gap: clamp(40px, 6vw, 96px); min-width: 0; padding-bottom: 60px; }
+  .gal .obj .ph { aspect-ratio: var(--ar, 4/5); }
+  .shots { display: grid; gap: clamp(40px, 6vw, 96px); min-width: 0; }
+  .shots > :nth-child(2n) { width: 68%; justify-self: end; }
+  .shots > :nth-child(3n) { width: 82%; justify-self: start; }
+  .gal .r360 { width: 100%; }
+  .gal .tag { margin-top: 14px; }
+  .panel { grid-column: 8 / span 5; position: sticky; top: 110px; min-width: 0; padding-bottom: 60px; }
+  .crumb { display: flex; gap: 10px; align-items: center; }
+  .crumb a:hover { color: var(--ink); }
+  .panel h1 { font-size: clamp(2.8rem, 5vw, 4.4rem); margin: 18px 0 6px; }
+  .panel .line { font-family: var(--f-display); font-style: italic; font-size: 1.2rem; color: var(--graphite); margin: 0 0 26px; }
+  .panel .prose { font-size: 1rem; }
+  .cfg { margin-top: 34px; border-top: 1px solid var(--hair); }
+  .field { padding: 18px 0; border-bottom: 1px solid var(--hair); }
+  .field > .label { display: flex; justify-content: space-between; margin-bottom: 12px; }
+  .field > .label b { font-weight: 500; color: var(--ink); letter-spacing: .04em; text-transform: none; font-size: .85rem; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { min-height: 40px; min-width: 52px; padding: 0 14px; font-size: .85rem; box-shadow: inset 0 0 0 1px var(--hair); transition: box-shadow .3s var(--ease), background .3s var(--ease), color .3s; }
+  .chip:hover { box-shadow: inset 0 0 0 1px var(--graphite); }
+  .chip[aria-pressed="true"] { box-shadow: inset 0 0 0 1px var(--ink); background: var(--ink); color: var(--paper); }
+  .chip.dot { display: inline-flex; align-items: center; gap: 10px; }
+  .chip.dot i { width: 12px; height: 12px; border-radius: 50%; }
+  .note { font-size: var(--t-small); color: var(--graphite); font-weight: 300; margin: 10px 0 0; }
+  select.size { font: inherit; font-size: .95rem; width: 100%; min-height: 44px; border: 0; box-shadow: inset 0 0 0 1px var(--hair); padding: 0 12px; background: var(--paper); color: var(--ink); }
+  .total { display: flex; justify-content: space-between; align-items: baseline; padding: 26px 0 22px; }
+  .total b { font-family: var(--f-display); font-weight: 400; font-size: 2rem; }
+  .actions { display: grid; gap: 12px; }
+  .actions .btn { width: 100%; }
+  .specs { margin-top: 40px; }
+  .specs ul { list-style: none; padding: 0; margin: 14px 0 0; border-top: 1px solid var(--hair); }
+  .specs li { padding: 12px 0; border-bottom: 1px solid var(--hair); font-size: .95rem; font-weight: 300; }
+  .more { padding-block: clamp(90px, 12vw, 180px); border-top: 1px solid var(--hair); margin-top: clamp(60px, 8vw, 120px); }
+  .more-head { display: flex; justify-content: space-between; align-items: end; gap: 20px; margin-bottom: 60px; flex-wrap: wrap; }
+  .more-head .display { font-size: var(--t-h2); }
+  .more-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(16px, 3vw, 48px); align-items: start; }
+  .more-row .ph { aspect-ratio: 4/5; }
+  .missing { padding: 30vh 0; text-align: center; }
+  @media (max-width: 960px) {
+    .gal, .panel, .about { grid-column: 1 / -1; }
+    .panel { position: static; padding-bottom: 50px; margin-top: 40px; }
+    .gal { gap: 28px; padding-bottom: 50px; }
+    .shots { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; margin-right: calc(-1 * var(--pad) - var(--gutter-r)); padding-right: 16px; }
+    .shots::-webkit-scrollbar { display: none; }
+    .shots > :nth-child(n) { flex: 0 0 82%; width: auto; scroll-snap-align: start; }
+    .shots .rv.wait { transform: none; opacity: 1; }
+    .more-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+</style>
+</head>
+<body data-page="piece" class="dark-top">
+<main id="main"></main>
+
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="js/catalog.js"></script>
+<script src="js/angles.js"></script>
+<script>
+(function () {
+  const V = window.VRIAH;
+  const main = document.getElementById('main');
+  const sizes = ['4', '4½', '5', '5½', '6', '6½', '7', '7½', '8', '8½', '9'];
+  const ctMeta = c => c < 1 ? '.' + String(Math.round(c * 100)).padStart(2, '0') : c.toFixed(1);
+
+  const VIEW = l => (l + (/view|detail|sheet/i.test(l) ? '' : ' view')).toUpperCase();
+  function sheetHTML(p, t) {
+    if (p.sheet) return `<section data-dark-hero class="sheet sheet-img wrap"><div class="inner"><button class="zoomable" data-lb="sheet" data-cap="${p.name.toUpperCase()} · CAD SHEET" aria-label="Enlarge the CAD sheet"><img src="${V.img(p.sheet)}" width="1672" height="941" alt="VRIAH CAD sheet: ${p.name}, ${p.line}. ${p.specs.map(s => s.join(' ')).join('. ')}."></button><p class="sh-tap">Click the sheet to enlarge and zoom</p></div></section>`;
+    const metalName = V.metals[p.metal];
+    // craftsmanship first: the labelled photo sits in the main row beside the main view
+    const labelled = Object.values(p.anno).map(an => [an, 'Craftsmanship detail']);
+    const ordered = [p.views[0], ...labelled, ...p.views.slice(1)];
+    const views = ordered.slice(0, 3), details = ordered.slice(3);
+    const specs = p.specs || [
+      ['Centre stone', p.shape + ' cut'],
+      ['Setting', p.anatomy[1] || p.line],
+      ['Metal', '14K or 18K ' + metalName.toLowerCase()],
+      ['Stone options', t ? 'Natural, lab-grown, moissanite, sapphire & ruby' : 'Agreed at your appointment'],
+      ['Price', t ? 'From ' + V.peso(V.fromPrice(p)) : 'On request']
+    ];
+    const fig = ([im, label], cls = '') => `<figure class="${cls}"><button class="zoomable" data-lb="sheet" data-cap="${p.name.toUpperCase()} · ${VIEW(label)}" aria-label="Enlarge ${label.toLowerCase()}"><img src="${V.img(im)}" alt="${p.name}, ${label.toLowerCase()}" loading="lazy"></button><figcaption>${VIEW(label)}</figcaption></figure>`;
+    return `<section data-dark-hero class="sheet wrap"><div class="inner">
+      <header class="sh-head">
+        <div><p class="sh-word"><span class="logo" role="img" aria-label="VRIAH"></span></p><p class="sh-sub">${V.cats[p.cat].replace(/s$/, '').toUpperCase()}</p></div>
+      </header>
+      <p class="sh-line">${[p.name, p.line, metalName].map(x => `<span>${x.toUpperCase()}</span>`).join('<i>|</i>')}</p>
+      <div class="sh-body">
+        <div class="sh-views">
+          <div class="sh-row n${views.length}">${views.map(v => fig(v)).join('')}</div>
+          ${details.length ? `<div class="sh-strip">${details.slice(0, 5).map(v => fig(v, 'sm')).join('')}</div>` : ''}
+        </div>
+        <aside class="sh-spec">
+          <p class="sh-h">SPECIFICATIONS</p>
+          <dl>${specs.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('')}</dl>
+          <p class="sh-h">DESIGN FEATURES</p>
+          <ul>${p.anatomy.map(a => `<li>${a}</li>`).join('')}</ul>
+        </aside>
+      </div>
+      <p class="sh-foot">TIMELESS <i>•</i> ELEGANT <i>•</i> MODERN</p>
+    </div></section>`;
+  }
+
+  function render() {
+    const id = location.hash.slice(1) || 'etoile';
+    const p = V.get(id);
+    if (!p) { main.innerHTML = `<div class="missing wrap"><p class="label">Not found</p><p class="display" style="font-size:var(--t-h2);margin:18px 0 30px">We could not find that piece.</p><a class="btn ghost" href="collection.html">Back to the collection</a></div>`; return; }
+    document.title = p.name + ' · VRIAH';
+    const t = p.tier && V.tiers[p.tier];
+    const state = { stone: t ? (p.cat === 'solitaire' || p.cat === 'halo' ? 'lab' : 'natural') : null, ct: null, karat: 1, metal: p.metal, size: '6' };
+    if (t) state.ct = t[state.stone][Math.min(1, t[state.stone].length - 1)][0];
+
+    const sheet = sheetHTML(p, t);
+    const related = V.pieces.filter(q => q.id !== p.id && (q.cat === p.cat || q.metal === p.metal)).slice(0, 4);
+
+    main.innerHTML = `
+      ${sheet}
+      <section class="pd wrap"><div class="inner pd-grid">
+        <div class="about">
+          <p class="label crumb"><a href="collection.html">Collection</a><span aria-hidden="true">/</span><a href="collection.html#${p.cat}">${V.cats[p.cat]}</a></p>
+          <h1 class="display">${p.name}</h1>
+          <p class="line">${p.line}</p>
+          <div class="prose"><p>${p.text}</p></div>
+          <div class="specs"><p class="label gold">Anatomy</p><ul>${p.anatomy.map(a => `<li>${a}</li>`).join('')}</ul></div>
+        </div>
+        <aside class="panel">
+          ${t ? `
+          <div class="cfg">
+            <div class="field"><p class="label">Stone <b id="v-stone"></b></p><div class="chips" id="f-stone">${Object.entries(V.stones).map(([k, s]) => `<button class="chip" data-v="${k}">${s.short}</button>`).join('')}</div><p class="note" id="n-stone"></p></div>
+            <div class="field"><p class="label">Carat <b id="v-ct"></b></p><div class="chips" id="f-ct"></div></div>
+            <div class="field"><p class="label">Gold <b id="v-karat"></b></p><div class="chips" id="f-karat"><button class="chip" data-v="1">14K</button><button class="chip" data-v="2">18K</button></div></div>
+            <div class="field"><p class="label">Colour <b id="v-metal"></b></p><div class="chips" id="f-metal">${Object.entries(V.metals).map(([k, m]) => `<button class="chip dot" data-v="${k}"><i class="sw-${k}"></i>${m.split(' ')[0]}</button>`).join('')}</div></div>
+            <div class="field"><label class="label" for="f-size" style="display:flex;justify-content:space-between;margin-bottom:12px">Ring size (US) <a href="atelier.html#sizing" style="text-transform:none;letter-spacing:.04em">Sizing guide</a></label>
+              <select class="size" id="f-size">${sizes.map(s => `<option${s === '6' ? ' selected' : ''}>${s}</option>`).join('')}<option value="unsure">Not sure yet</option></select></div>
+          </div>
+          <div class="total"><span class="label">Price</span><b class="num" id="price"></b></div>` : `
+          <div class="cfg"><div class="field"><p class="label">Price</p><p style="margin:0;font-family:var(--f-display);font-size:1.6rem">On request</p><p class="note">This piece is quoted individually. Stone, gold and size are agreed at your appointment.</p></div></div><div style="height:26px"></div>`}
+          <div class="actions">
+            <a class="btn" id="req" href="appointment.html#${p.id}">Request this piece</a>
+            <a class="btn ghost" href="appointment.html#${p.id}">Book a private viewing</a>
+          </div>
+        </aside>
+      </div></section>
+      <section class="more wrap"><div class="inner">
+        <div class="more-head"><p class="display">Also in the <em>collection</em></p><a class="link" href="collection.html">View all <span class="arr"></span></a></div>
+        <div class="more-row">${related.map(q => { const f = V.fromPrice(q); return `<a class="obj" href="piece.html#${q.id}"><div class="ph"><img src="${V.img(q.imgs[0])}" alt="${q.name}" loading="lazy"><span class="sheen"></span></div><div class="cap"><span class="t">${q.name}</span><span class="m num">${f ? 'From ' + V.peso(f) : 'On request'}</span></div></a>`; }).join('')}</div>
+      </div></section>`;
+
+    if (t) {
+      const set = (k, v) => { state[k] = v; sync(); };
+      const bind = (fid, key, conv = x => x) => document.getElementById(fid).addEventListener('click', e => { const b = e.target.closest('.chip'); if (b) set(key, conv(b.dataset.v)); });
+      bind('f-stone', 'stone'); bind('f-ct', 'ct', parseFloat); bind('f-karat', 'karat', Number); bind('f-metal', 'metal');
+      document.getElementById('f-size').addEventListener('change', e => { state.size = e.target.value; sync(); });
+      function sync() {
+        const rows = t[state.stone];
+        if (!rows.some(r => r[0] === state.ct)) state.ct = rows[Math.min(1, rows.length - 1)][0];
+        document.getElementById('f-ct').innerHTML = rows.map(r => `<button class="chip num" data-v="${r[0]}" aria-pressed="${r[0] === state.ct}">${ctMeta(r[0])}</button>`).join('');
+        document.querySelectorAll('#f-stone .chip').forEach(b => b.setAttribute('aria-pressed', b.dataset.v === state.stone));
+        document.querySelectorAll('#f-karat .chip').forEach(b => b.setAttribute('aria-pressed', Number(b.dataset.v) === state.karat));
+        document.querySelectorAll('#f-metal .chip').forEach(b => b.setAttribute('aria-pressed', b.dataset.v === state.metal));
+        document.getElementById('v-stone').textContent = V.stones[state.stone].label;
+        document.getElementById('n-stone').textContent = V.stones[state.stone].note || '';
+        document.getElementById('v-ct').textContent = ctMeta(state.ct) + ' ct';
+        document.getElementById('v-karat').textContent = state.karat === 1 ? '14 karat' : '18 karat';
+        document.getElementById('v-metal').textContent = V.metals[state.metal];
+        const row = rows.find(r => r[0] === state.ct);
+        document.getElementById('price').textContent = V.peso(row[state.karat]);
+        const q = `${p.id}`;
+        document.getElementById('req').href = 'appointment.html#' + q;
+        try { sessionStorage.setItem('vriah-choice', JSON.stringify({ id: p.id, stone: V.stones[state.stone].label, ct: ctMeta(state.ct) + ' ct', gold: (state.karat === 1 ? '14K ' : '18K ') + V.metals[state.metal].toLowerCase(), size: state.size, price: V.peso(row[state.karat]) })); } catch (e) {}
+      }
+      sync();
+    } else { try { sessionStorage.removeItem('vriah-choice'); } catch (e) {} }
+    window.scrollTo(0, 0);
+  }
+  addEventListener('hashchange', render);
+  render();
+})();
+</script>
+<script src="js/site.js"></script>
+<script src="js/lightbox.js"></script>
+</body>
+</html>

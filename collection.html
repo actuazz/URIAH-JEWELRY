@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Collection · VRIAH</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap">
+<link rel="stylesheet" href="css/site.css">
+<style>
+  :root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+  .intro-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 0 clamp(16px, 2vw, 32px); align-items: end; }
+  .intro-grid > div { grid-column: 1 / span 8; min-width: 0; }
+  .intro-grid > p { grid-column: 9 / span 4; margin: 0; }
+  @media (max-width: 860px) { .intro-grid > div, .intro-grid > p { grid-column: 1 / -1; } .intro-grid > p { margin-top: 24px; } }
+
+  .filters { position: sticky; top: 0; z-index: 30; background: rgba(255,255,255,.94); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-block: 1px solid var(--hair); transition: top .6s var(--ease-out); }
+  .hdr:not(.hide) ~ main .filters { top: calc(76px + env(safe-area-inset-top, 0px)); }
+  .filters .inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 64px; }
+  .tabs { display: flex; gap: clamp(16px, 2.2vw, 34px); overflow-x: auto; scrollbar-width: none; min-width: 0; }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab { font-size: var(--t-label); letter-spacing: .08em; text-transform: uppercase; font-weight: 500; color: var(--graphite); padding-block: 22px; white-space: nowrap; position: relative; }
+  .tab sup { font-size: .85em; letter-spacing: 0; margin-left: 4px; color: var(--champagne-ink); }
+  .tab[aria-pressed="true"] { color: var(--ink); }
+  .tab[aria-pressed="true"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; background: var(--ink); }
+  .opts { display: flex; gap: 22px; align-items: center; flex: none; }
+  .metals { display: flex; gap: 10px; }
+  .metals button { width: 18px; height: 18px; border-radius: 50%; position: relative; }
+  .metals button::after { content: ""; position: absolute; inset: -5px; border-radius: 50%; box-shadow: inset 0 0 0 1px var(--champagne); opacity: 0; transition: opacity .3s; }
+  .metals button[aria-pressed="true"]::after { opacity: 1; }
+  select.sort { font: inherit; font-size: var(--t-label); letter-spacing: .08em; text-transform: uppercase; border: 0; background: transparent; color: var(--ink); padding: 8px 0; cursor: pointer; }
+  @media (max-width: 860px) {
+    .hdr:not(.hide) ~ main .filters { top: calc(64px + env(safe-area-inset-top, 0px)); }
+    .filters .inner { flex-direction: column; align-items: stretch; gap: 0; }
+    .tab { padding-block: 16px; }
+    .opts { justify-content: space-between; border-top: 1px solid var(--hair); min-height: 48px; }
+  }
+
+  /* Uniform grid: every photograph the same size, captions on one line, grouped by category */
+  .groups { display: grid; gap: clamp(80px, 9vw, 130px); padding-block: clamp(56px, 7vw, 100px) clamp(100px, 12vw, 180px); }
+  .group-head { display: flex; justify-content: space-between; align-items: baseline; gap: 20px; border-bottom: 1px solid var(--ink); padding-bottom: 14px; margin-bottom: clamp(28px, 3vw, 44px); }
+  .group-head h2 { font-family: var(--f-display); font-weight: 400; font-size: var(--t-h3); margin: 0; }
+  .grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(40px, 4vw, 64px) clamp(16px, 2vw, 32px); }
+  .grid .cap { flex-direction: column; gap: 4px; align-items: flex-start; margin-top: 14px; }
+  .grid .cap .row { display: flex; justify-content: space-between; width: 100%; gap: 12px; align-items: baseline; }
+  .empty { padding: 120px 0; text-align: center; color: var(--graphite); }
+  @media (max-width: 1100px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (max-width: 700px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px 14px; } .grid .cap .t { font-size: 1rem; } .grid .cap .row { flex-direction: column; gap: 2px; } }
+</style>
+</head>
+<body data-page="collection">
+<main>
+  <section class="intro wrap">
+    <div class="inner intro-grid">
+      <div>
+        <p class="label gold"><span class="mark"></span>The collection</p>
+        <h1 class="display"><span id="count">Thirty-six</span> pieces, <em>made to order.</em></h1>
+      </div>
+      <p class="lede">Every ring can be made with a natural diamond, a lab-grown diamond, moissanite or a coloured gem, in 14K or 18K gold. Prices are shown from the lightest option.</p>
+    </div>
+  </section>
+
+  <div class="filters wrap">
+    <div class="inner">
+      <div class="tabs" id="tabs" role="group" aria-label="Category"></div>
+      <div class="opts">
+        <div class="metals" id="metals" role="group" aria-label="Metal shown">
+          <button class="sw-yellow" data-m="yellow" aria-label="Yellow gold" aria-pressed="false"></button>
+          <button class="sw-white" data-m="white" aria-label="White gold" aria-pressed="false"></button>
+          <button class="sw-rose" data-m="rose" aria-label="Rose gold" aria-pressed="false"></button>
+        </div>
+        <label class="sr" for="sort" style="position:absolute;left:-9999px">Sort</label>
+        <select class="sort" id="sort">
+          <option value="curated">Curated order</option>
+          <option value="low">Price, low to high</option>
+          <option value="high">Price, high to low</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <section class="wrap"><div class="inner"><div class="groups" id="salon"></div></div></section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="js/catalog.js"></script>
+<script src="js/site.js"></script>
+<script>
+(function () {
+  const V = window.VRIAH;
+  const state = { cat: 'all', metal: null, sort: 'curated' };
+  const words = ['Zero','One','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten','Eleven','Twelve','Thirteen','Fourteen','Fifteen','Sixteen','Seventeen','Eighteen','Nineteen','Twenty','Twenty-one','Twenty-two','Twenty-three','Twenty-four','Twenty-five'];
+  const tens = ['', '', 'Twenty', 'Thirty', 'Forty'];
+  const inWords = n => n < 20 ? words[n] : tens[Math.floor(n / 10)] + (n % 10 ? '-' + words[n % 10].toLowerCase() : '');
+  document.getElementById('count').textContent = V.pieces.length < 50 ? inWords(V.pieces.length) : V.pieces.length;
+
+  const tabs = document.getElementById('tabs');
+  const cats = [['all', 'All', V.pieces.length], ...Object.entries(V.cats).map(([k, t]) => [k, t, V.pieces.filter(p => p.cat === k).length])];
+  tabs.innerHTML = cats.map(([k, t, n]) => `<button class="tab" data-cat="${k}" aria-pressed="false">${t}<sup class="num">${n}</sup></button>`).join('');
+  tabs.addEventListener('click', e => { const b = e.target.closest('.tab'); if (!b) return; setCat(b.dataset.cat, true); });
+  document.getElementById('metals').addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    state.metal = state.metal === b.dataset.m ? null : b.dataset.m; render();
+  });
+  document.getElementById('sort').addEventListener('change', e => { state.sort = e.target.value; render(); });
+
+  function setCat(c, push) {
+    state.cat = V.cats[c] ? c : 'all';
+    if (push) history.replaceState(null, '', state.cat === 'all' ? location.pathname : '#' + state.cat);
+    render();
+  }
+  const ars = ['4/5', '1/1', '3/4', '4/5', '5/6'];
+  function render() {
+    tabs.querySelectorAll('.tab').forEach(b => b.setAttribute('aria-pressed', b.dataset.cat === state.cat));
+    document.querySelectorAll('#metals button').forEach(b => b.setAttribute('aria-pressed', b.dataset.m === state.metal));
+    let list = V.pieces.filter(p => (state.cat === 'all' || p.cat === state.cat) && (!state.metal || p.metal === state.metal));
+    if (state.sort !== 'curated') list = list.slice().sort((a, b) => {
+      const fa = V.fromPrice(a) ?? Infinity, fb = V.fromPrice(b) ?? Infinity;
+      return state.sort === 'low' ? fa - fb : (fb === Infinity ? -1 : fa === Infinity ? 1 : fb - fa);
+    });
+    const salon = document.getElementById('salon');
+    if (!list.length) { salon.innerHTML = `<p class="empty">No pieces in ${V.metals[state.metal].toLowerCase()} in this category yet. <button class="link" id="clear">Show all metals</button></p>`; document.getElementById('clear').onclick = () => { state.metal = null; render(); }; return; }
+    const item = p => { const f = V.fromPrice(p); return `<a class="obj" href="piece.html#${p.id}">
+        <div class="ph"><img src="${V.img(p.imgs[0])}" alt="${p.name}, ${p.line.toLowerCase()}" loading="lazy"></div>
+        <div class="cap"><span class="label">${V.metals[p.metal]}</span>
+          <span class="row"><span class="t">${p.name}</span><span class="m num">${f ? 'From ' + V.peso(f) : 'On request'}</span></span>
+          <span class="m">${p.line}</span></div></a>`; };
+    const groups = state.sort === 'curated' ? Object.keys(V.cats).map(k => [k, list.filter(p => p.cat === k)]).filter(g => g[1].length) : [[null, list]];
+    salon.innerHTML = groups.map(([k, items]) => `<section>
+        ${k ? `<div class="group-head"><h2>${V.cats[k]}</h2><span class="label num">${items.length} ${items.length === 1 ? 'piece' : 'pieces'}</span></div>` : ''}
+        <div class="grid">${items.map(item).join('')}</div></section>`).join('');
+    window.VRIAH_UI && window.VRIAH_UI.lenis && window.VRIAH_UI.lenis.resize && window.VRIAH_UI.lenis.resize();
+  }
+  addEventListener('hashchange', () => setCat(location.hash.slice(1)));
+  setCat(location.hash.slice(1));
+})();
+</script>
+</body>
+</html>
