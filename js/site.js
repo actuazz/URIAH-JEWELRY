@@ -67,8 +67,13 @@
   document.body.append(ftr);
   ftr.querySelector('#news').addEventListener('submit', e => {
     e.preventDefault();
-    const v = ftr.querySelector('#news-email').value.trim();
-    ftr.querySelector('#news-msg').textContent = /.+@.+\..+/.test(v) ? 'Thank you. You are on the list.' : 'Enter an email address, like name@example.com.';
+    const v = ftr.querySelector('#news-email').value.trim(), msg = ftr.querySelector('#news-msg');
+    if (!/.+@.+\..+/.test(v)) { msg.textContent = 'Enter an email address, like name@example.com.'; return; }
+    msg.textContent = 'Adding you…';
+    fetch('https://formspree.io/f/xoedpwkz', { method: 'POST', headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({ form: 'Newsletter sign-up', email: v, _subject: 'VRIAH newsletter sign-up' }) })
+      .then(r => { if (!r.ok) throw 0; msg.textContent = 'Thank you. You are on the list.'; e.target.reset(); })
+      .catch(() => { msg.textContent = 'That did not go through. Please try again in a moment.'; });
   });
 
   /* ---------- Smooth scroll ---------- */

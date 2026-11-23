@@ -79,7 +79,7 @@
         <div class="f"><label class="label" for="piece">Piece of interest</label><select id="piece" name="piece"><option value="">Not decided yet</option></select></div>
         <div class="f"><label class="label" for="note">Anything we should know</label><textarea id="note" name="note" placeholder="Your budget, the stone you have in mind, or a ring size."></textarea></div>
         <p class="err" id="err" role="alert"></p>
-        <div class="submit"><button class="btn" type="submit">Send request via Messenger</button><span class="label">Your request is copied and Messenger opens. Paste it into the chat and press send.</span></div>
+        <div class="submit"><button class="btn" type="submit" id="send">Request appointment</button><span class="label">We confirm by email, usually within a day.</span></div>
       </form>
       <div class="visit">
         <div><p class="label gold">Visits</p><p>By appointment only</p></div>
@@ -94,7 +94,8 @@
 <script src="js/site.js"></script>
 <script>
 (function () {
-  /* VRIAH's Messenger link: requests are sent here. Set to the page's m.me address. */
+  /* Requests are delivered to VRIAH by Formspree (email + dashboard). Messenger is offered afterwards as a second channel. */
+  const FORMSPREE = 'https://formspree.io/f/xoedpwkz';
   const MESSENGER = 'https://m.me/61574694860431';
   const V = window.VRIAH;
   const sel = document.getElementById('piece');
@@ -129,28 +130,29 @@
     const text = ['VRIAH appointment request', '',
       'Name: ' + name, 'Email: ' + email, 'Appointment: ' + f.kind.value, 'Preferred date: ' + nice, 'Time: ' + f.time.value,
       'Piece: ' + pieceLine].concat(note ? ['Note: ' + note] : []).join('\n');
-    // Messenger links cannot carry a pre-written message, so the request is copied for the visitor to paste.
-    const copy = () => (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject()).then(() => true, () => false);
-    const copied = copy();
-    if (MESSENGER) { const w = window.open(MESSENGER, '_blank', 'noopener'); }
-    const esc = t => t.replace(/[<>&]/g, c => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;' }[c]));
-    f.outerHTML = `<div class="done" tabindex="-1" id="done">
-      <p class="label gold">One more step</p>
+    const esc = t => t.replace(/[<>&"]/g, c => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;' }[c]));
+    const btn = document.getElementById('send'); btn.disabled = true; btn.textContent = 'Sending…';
+    fetch(FORMSPREE, { method: 'POST', headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({ form: 'Appointment request', name, email, appointment: f.kind.value, preferred_date: nice, time: f.time.value,
+        piece: pieceLine, note: note || '—', _replyto: email, _subject: 'VRIAH appointment request: ' + name }) })
+      .then(r => { if (!r.ok) throw 0; return true; })
+      .catch(() => false)
+      .then(sent => {
+        if (!sent) { btn.disabled = false; btn.textContent = 'Request appointment';
+          err.innerHTML = 'Your request did not go through. Please try again, or <a class="link" href="' + MESSENGER + '" target="_blank" rel="noopener">message us on Messenger</a>.'; return; }
+        f.outerHTML = `<div class="done" tabindex="-1" id="done">
+      <p class="label gold">Request received</p>
       <h2 class="display">Thank you, <em>${esc(name)}.</em></h2>
-      <p class="prose" id="copy-status">Your request is ready. Paste it into our Messenger chat and press send; we reply there to confirm.</p>
-      <label class="label" for="req-text" style="display:block;margin-top:26px">Your request</label>
-      <textarea id="req-text" class="req-text" readonly rows="9">${esc(text)}</textarea>
+      <p class="prose">We have your request and will confirm by email at ${esc(email)}, usually within a day.</p>
+      <dl><dt>Appointment</dt><dd>${esc(f.kind.value)}</dd><dt>Date</dt><dd>${esc(nice)}</dd><dt>Time</dt><dd>${esc(f.time.value)}</dd><dt>Piece</dt><dd>${esc(pieceLine)}</dd></dl>
+      <p class="prose">Prefer to chat? Your request is ready to paste into Messenger.</p>
       <div class="submit">
-        ${MESSENGER ? `<a class="btn" href="${MESSENGER}" target="_blank" rel="noopener">Open Messenger</a>` : ''}
-        <button class="btn ghost" type="button" id="copy-again">Copy request</button>
+        <a class="btn ghost" href="${MESSENGER}" target="_blank" rel="noopener" id="msgr">Continue on Messenger</a>
       </div>
       <p class="label" style="margin-top:30px"><a class="link" href="collection.html">Keep browsing the collection <span class="arr"></span></a></p></div>`;
-    const status = document.getElementById('copy-status'), box = document.getElementById('req-text');
-    copied.then(ok => { status.textContent = ok ? 'Your request is copied. Paste it into our Messenger chat and press send; we reply there to confirm.' : 'Select the request below, copy it, then paste it into our Messenger chat and press send.'; });
-    document.getElementById('copy-again').addEventListener('click', () => {
-      copy().then(ok => { status.textContent = ok ? 'Copied again. Paste it into our Messenger chat and press send.' : 'Select the request below and copy it.'; if (!ok) { box.focus(); box.select(); } });
-    });
-    document.getElementById('done').focus();
+        document.getElementById('msgr').addEventListener('click', () => { if (navigator.clipboard) navigator.clipboard.writeText(text).catch(() => {}); });
+        document.getElementById('done').focus();
+      });
   });
 })();
 </script>
