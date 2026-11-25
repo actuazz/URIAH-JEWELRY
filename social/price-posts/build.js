@@ -123,10 +123,10 @@ function budget() {
   const e = V.get('etoile'), s = V.get('silhouette'), c = V.get('celeste'), l = V.get('lumiere');
   const L = (p, carat) => row(p, 'lab', carat)[1], M = (p, carat) => row(p, 'moissanite', carat)[1];
   const bands = [
-    ['Under ₱40K', [`<b>Étoile</b>, 1.0 ct moissanite · ${peso(M(e, 1))}`, `<b>Étoile</b>, .5 ct lab-grown · ${peso(L(e, .5))}`, `<b>Céleste</b>, .5 ct moissanite · ${peso(M(c, .5))}`]],
-    ['₱40K – ₱60K', [`<b>Étoile</b>, 1.0 ct lab-grown · ${peso(L(e, 1))}`, `<b>Étoile</b>, 1.5 ct lab-grown · ${peso(L(e, 1.5))}`, `<b>Silhouette</b>, 1.0 ct lab-grown · ${peso(L(s, 1))}`]],
-    ['₱60K – ₱90K', [`<b>Étoile</b>, 2.0 ct lab-grown · ${peso(L(e, 2))}`, `<b>Lumière</b> halo, 1.0 ct lab-grown · ${peso(L(l, 1))}`, `<b>Céleste</b>, 2.0 ct lab-grown · ${peso(L(c, 2))}`]],
-    ['₱90K and up', [`<b>Lumière</b> halo, 2.0 ct lab-grown · ${peso(L(l, 2))}`, `<b>Céleste</b>, 3.0 ct lab-grown · ${peso(L(c, 3))}`, `<b>Lumière</b> halo, 3.0 ct lab-grown · ${peso(L(l, 3))}`]]
+    ['Under ₱40K', [`<b>Essenza</b>, 1.0 ct moissanite · ${peso(M(e, 1))}`, `<b>Essenza</b>, .5 ct lab-grown · ${peso(L(e, .5))}`, `<b>Lirica</b>, .5 ct moissanite · ${peso(M(c, .5))}`]],
+    ['₱40K – ₱60K', [`<b>Essenza</b>, 1.0 ct lab-grown · ${peso(L(e, 1))}`, `<b>Essenza</b>, 1.5 ct lab-grown · ${peso(L(e, 1.5))}`, `<b>Leggera</b>, 1.0 ct lab-grown · ${peso(L(s, 1))}`]],
+    ['₱60K – ₱90K', [`<b>Essenza</b>, 2.0 ct lab-grown · ${peso(L(e, 2))}`, `<b>Luce</b> halo, 1.0 ct lab-grown · ${peso(L(l, 1))}`, `<b>Lirica</b>, 2.0 ct lab-grown · ${peso(L(c, 2))}`]],
+    ['₱90K and up', [`<b>Luce</b> halo, 2.0 ct lab-grown · ${peso(L(l, 2))}`, `<b>Lirica</b>, 3.0 ct lab-grown · ${peso(L(c, 3))}`, `<b>Luce</b> halo, 3.0 ct lab-grown · ${peso(L(l, 3))}`]]
   ];
   return page(`<div class="plain"></div>
   <div class="toplogo" style="top:96px"><div class="logo"></div></div>
