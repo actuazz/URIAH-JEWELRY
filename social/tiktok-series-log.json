@@ -1,1 +1,30 @@
-{"scheduled":[{"n":1,"date":"2026-11-27","time":"13:46","ring":"Eden","kind":"ring","buffer_post_id":"6b09193ae94385a8fd793951","note":"posted with the plain photo before the series cards existed"}]}
+{
+ "scheduled": [
+  {
+   "n": 1,
+   "date": "2026-11-27",
+   "time": "13:46",
+   "ring": "Eden",
+   "kind": "ring",
+   "buffer_post_id": "6b09193ae94385a8fd793951",
+   "note": "posted with the plain photo before the series cards existed",
+   "tiktok_url": "https://tiktok.com/@uriah.ph/video/7712722667865918772"
+  },
+  {
+   "n": 2,
+   "date": "2026-11-27",
+   "time": "15:37",
+   "ring": "Eden",
+   "kind": "price",
+   "buffer_post_id": "6b091a44e94385a8fd799ec1"
+  },
+  {
+   "n": 3,
+   "date": "2026-11-27",
+   "time": "20:23",
+   "ring": "Eden",
+   "kind": "feeling",
+   "buffer_post_id": "6b091a4c049983dcfb904a8a"
+  }
+ ]
+}
