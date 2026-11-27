@@ -1,1 +1,19 @@
-{"prepared":[{"n":0,"date":"2026-11-26","slot":"first","theme":"Étoile price slideshow","publish_session_id":"1b9f8177-133a-45d9-9dc9-744eddb0e8af"}]}
+{
+ "prepared": [
+  {
+   "n": 0,
+   "date": "2026-11-26",
+   "slot": "first",
+   "theme": "Étoile price slideshow",
+   "publish_session_id": "1b9f8177-133a-45d9-9dc9-744eddb0e8af"
+  },
+  {
+   "n": 1,
+   "date": "2026-11-27",
+   "slot": "afternoon",
+   "theme": "Eden",
+   "publish_session_id": "97ac53cc-d33b-48f4-bffa-6f5c10811cba",
+   "song": "Luxury Mode — Mirellavieira"
+  }
+ ]
+}
